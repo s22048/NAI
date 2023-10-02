@@ -46,6 +46,7 @@ class TicTacToe(TwoPlayerGame):
                 ]
             )
         )
+        print ("\n" + self.points_score_board[0] + ":" + self.points_score_board[1])
 
     def is_position_valid(self, i):
         if i >= (self.rows * self.columns):
@@ -60,46 +61,45 @@ class TicTacToe(TwoPlayerGame):
 
     def make_three(self, pos1, pos2, pos3):
 
-        if self.is_position_valid(self, pos1) and self.is_position_valid(self, pos2) and self.is_position_valid(self,
-                                                                                                                pos3):
+        if self.is_position_valid(pos1) and self.is_position_valid(pos2) and self.is_position_valid(pos3):
             symbol = self.board[pos1]
             return symbol == self.board[pos2] and symbol == self.board[pos3]
         else:
             return False
 
     def last_score(self):
-        if self.make_three(self, self.last_move_position, self.last_move_position - self.columns,
+        if self.make_three(self.last_move_position, self.last_move_position - self.columns,
                            self.last_move_position - 2 * self.columns) \
-                or self.make_three(self, self.last_move_position, (self.last_move_position + self.columns),
+                or self.make_three(self.last_move_position, (self.last_move_position + self.columns),
                                    (self.last_move_position + (2 * self.columns))) \
-                or self.make_three(self, self.last_move_position, (self.last_move_position - self.columns),
+                or self.make_three(self.last_move_position, (self.last_move_position - self.columns),
                                    (self.last_move_position + self.columns)) \
-                or (self.make_three(self, self.last_move_position, (self.last_move_position - 1),
-                                    (self.last_move_position - 2)) and self.are_positions_in_row(self,
+                or (self.make_three(self.last_move_position, (self.last_move_position - 1),
+                                    (self.last_move_position - 2)) and self.are_positions_in_row(
                                                                                                  self.last_move_position,
                                                                                                  self.last_move_position - 1,
                                                                                                  self.last_move_position - 2)) \
-                or (self.make_three(self, self.last_move_position, (self.last_move_position + 1),
-                                    (self.last_move_position + 2)) and self.are_positions_in_row(self,
+                or (self.make_three(self.last_move_position, (self.last_move_position + 1),
+                                    (self.last_move_position + 2)) and self.are_positions_in_row(
                                                                                                  self.last_move_position,
                                                                                                  self.last_move_position + 1,
                                                                                                  self.last_move_position + 2)) \
-                or (self.make_three(self, self.last_move_position, (self.last_move_position - 1),
-                                    (self.last_move_position + 1)) and self.are_positions_in_row(self,
+                or (self.make_three(self.last_move_position, (self.last_move_position - 1),
+                                    (self.last_move_position + 1)) and self.are_positions_in_row(
                                                                                                  self.last_move_position,
                                                                                                  self.last_move_position - 1,
                                                                                                  self.last_move_position + 1)) \
-                or self.make_three(self, self.last_move_position, (self.last_move_position - self.columns - 1),
+                or self.make_three(self.last_move_position, (self.last_move_position - self.columns - 1),
                                    (self.last_move_position - (2 * self.columns + 1))) \
-                or self.make_three(self, self.last_move_position, (self.last_move_position + self.columns + 1),
+                or self.make_three(self.last_move_position, (self.last_move_position + self.columns + 1),
                                    (self.last_move_position + (2 * self.columns + 1))) \
-                or self.make_three(self, self.last_move_position, (self.last_move_position - self.columns - 1),
+                or self.make_three(self.last_move_position, (self.last_move_position - self.columns - 1),
                                    (self.last_move_position + self.columns + 1)) \
-                or self.make_three(self, self.last_move_position, (self.last_move_position - self.columns + 1),
+                or self.make_three(self.last_move_position, (self.last_move_position - self.columns + 1),
                                    (self.last_move_position - (2 * self.columns - 1))) \
-                or self.make_three(self, self.last_move_position, (self.last_move_position + self.columns - 1),
+                or self.make_three(self.last_move_position, (self.last_move_position + self.columns - 1),
                                    (self.last_move_position + (2 * self.columns - 1))) \
-                or self.make_three(self, self.last_move_position, (self.last_move_position - self.columns + 1),
+                or self.make_three(self.last_move_position, (self.last_move_position - self.columns + 1),
                                    (self.last_move_position + self.columns - 1)):
             return -5
         return 0
@@ -111,5 +111,5 @@ class TicTacToe(TwoPlayerGame):
 if __name__ == "__main__":
     from easyAI import AI_Player, Negamax
 
-    ai_algo = Negamax(6)
+    ai_algo = Negamax(4)
     TicTacToe([Human_Player(), AI_Player(ai_algo)]).play()
