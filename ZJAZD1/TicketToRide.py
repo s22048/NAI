@@ -181,8 +181,8 @@ class TicketToRide(TwoPlayerGame):
         """
         if self.is_position_valid(pos1 - 1) and self.is_position_valid(pos2 - 1) and self.is_position_valid(pos3 - 1):
             symbol = self.board[pos1 - 1]
-            temp = symbol == self.board[pos2 - 1] and symbol == self.board[pos3 - 1]
-            return temp
+            are_the_same_symbols = symbol == self.board[pos2 - 1] and symbol == self.board[pos3 - 1]
+            return are_the_same_symbols
         else:
             return False
 
