@@ -14,7 +14,6 @@ class TicTacToe(TwoPlayerGame):
     def __init__(self, players):
         self.rows = 5
         self.columns = 7
-        self.points_score_board = [0, 0]
         self.last_move_position = 0
         self.players = players
         self.board = [0 for i in range(self.rows * self.columns)]
@@ -31,7 +30,7 @@ class TicTacToe(TwoPlayerGame):
         self.board[int(move) - 1] = 0
 
     def lose(self):
-        return self.points_score_board[self.opponent_index - 1] >= 2
+        return False
 
     def is_over(self):
         return (self.possible_moves() == []) or self.lose()
@@ -46,7 +45,6 @@ class TicTacToe(TwoPlayerGame):
                 ]
             )
         )
-        print ("\n" + self.points_score_board[0] + ":" + self.points_score_board[1])
 
     def is_position_valid(self, i):
         if i >= (self.rows * self.columns):
@@ -61,9 +59,9 @@ class TicTacToe(TwoPlayerGame):
 
     def make_three(self, pos1, pos2, pos3):
 
-        if self.is_position_valid(pos1) and self.is_position_valid(pos2) and self.is_position_valid(pos3):
-            symbol = self.board[pos1]
-            return symbol == self.board[pos2] and symbol == self.board[pos3]
+        if self.is_position_valid(pos1-1) and self.is_position_valid(pos2-1) and self.is_position_valid(pos3-1):
+            symbol = self.board[pos1-1]
+            return symbol == self.board[pos2-1] and symbol == self.board[pos3-1]
         else:
             return False
 
