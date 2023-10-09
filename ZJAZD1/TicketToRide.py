@@ -96,7 +96,7 @@ class TicketToRide(TwoPlayerGame):
              Returns:
              bool: True if the opponent has scored the required number of points and the game is over, otherwise False.
              """
-        return self.get_score_for_symbol(self.opponent_index) >= 5
+        return self.get_score_for_symbol(self.opponent_index) >= 3
 
     def get_score_for_symbol(self, symbol):
         """
@@ -181,7 +181,8 @@ class TicketToRide(TwoPlayerGame):
         """
         if self.is_position_valid(pos1 - 1) and self.is_position_valid(pos2 - 1) and self.is_position_valid(pos3 - 1):
             symbol = self.board[pos1 - 1]
-            return symbol == self.board[pos2 - 1] and symbol == self.board[pos3 - 1]
+            temp = symbol == self.board[pos2 - 1] and symbol == self.board[pos3 - 1]
+            return temp
         else:
             return False
 
@@ -232,10 +233,8 @@ class TicketToRide(TwoPlayerGame):
 
         if self.make_three(pos, (pos - self.columns), (pos + self.columns)) \
                 or (self.make_three(pos, (pos - 1), (pos + 1)) and self.are_positions_in_row(pos, pos - 1, pos + 1)) \
-                or (
-                self.is_not_side_border(pos) and self.make_three(pos, (pos - self.columns - 1), (pos + self.columns + 1))) \
-                or (
-                self.is_not_side_border(pos) and self.make_three(pos, (pos - self.columns + 1), (pos + self.columns - 1))):
+                or (self.is_not_side_border(pos) and self.make_three(pos, (pos - self.columns - 1), (pos + self.columns + 1))) \
+                or (self.is_not_side_border(pos) and self.make_three(pos, (pos - self.columns + 1), (pos + self.columns - 1))):
             return True
 
         return False
