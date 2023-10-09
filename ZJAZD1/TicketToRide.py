@@ -61,33 +61,91 @@ class TicTacToe(TwoPlayerGame):
         return True
 
     def are_positions_in_row(self, pos1, pos2, pos3):
+        """Checks if given positions are all in the same row.
+
+        Parameters:
+            pos1, pos2, pos3 (int): Positions on the board
+
+        Returns:
+            boolean: True if given positions are all in the same row, False otherwise
+        """
         first_column_number = (pos1 - 1) // self.columns
         return first_column_number == (pos2 - 1) // self.columns and first_column_number == (pos3 - 1) // self.columns
 
     def make_three(self, pos1, pos2, pos3):
+        """Checks if given positions all have filled the same symbol or are all empty.
+
+        Parameters:
+            pos1, pos2, pos3 (int): Positions on the board
+
+        Returns:
+            boolean: True if these positions are valid and filled with the same symbol or are all empty, False otherwise.
+        """
         if self.is_position_valid(pos1 - 1) and self.is_position_valid(pos2 - 1) and self.is_position_valid(pos3 - 1):
             symbol = self.board[pos1 - 1]
-            temp = symbol == self.board[pos2 - 1] and symbol == self.board[pos3 - 1]
-            return temp
+            return symbol == self.board[pos2 - 1] and symbol == self.board[pos3 - 1]
         else:
             return False
 
-    def isNotSideBorder(self, pos):
+    def is_not_side_border(self, pos):
+        """Checks if given position is located on one of the side borders.
+
+        Positions on the side borders:
+        X . . . . . X
+        X . . . . . X
+        X . . . . . X
+        X . . . . . X
+        X . . . . . X
+
+        Parameters:
+            pos: Position on the board
+
+        Returns:
+            boolean: True if the position is not on the left or the right border of the board, False otherwise.
+        """
         return (pos - 1) % self.columns != 0 and (pos - 1) % self.columns != self.columns - 1
 
     def is_in_center_of_score(self, pos, symbol):
+        """Checks if given position is located in the center of a scored three symbol pattern.
+
+        Examples of scoring patterns positions:
+
+        Three in row:
+        X X X . . . .
+
+        Three in column:
+        X
+        X
+        X
+
+        Three diagonally:
+        X . .   or  . . X
+        . X .       . X .
+        . . X       X . .
+
+        Parameters:
+            pos: Position on the board
+
+        Returns:
+            boolean: True if that position the central position of a scored three symbol pattern, False otherwise.
+        """
         if(self.board[pos - 1] != symbol):
             return False
 
         if self.make_three(pos, (pos - self.columns), (pos + self.columns)) \
-                or (self.make_three(pos, (pos - 1), (pos + 1)) and self.are_positions_in_row(pos, pos - 1,pos + 1)) \
-                or (self.isNotSideBorder(pos) and self.make_three(pos, (pos - self.columns - 1), (pos + self.columns + 1))) \
-                or  (self.isNotSideBorder(pos) and self.make_three(pos, (pos - self.columns + 1), (pos + self.columns - 1))):
+                or (self.make_three(pos, (pos - 1), (pos + 1)) and self.are_positions_in_row(pos, pos - 1, pos + 1)) \
+                or (self.is_not_side_border(pos) and self.make_three(pos, (pos - self.columns - 1), (pos + self.columns + 1))) \
+                or (self.is_not_side_border(pos) and self.make_three(pos, (pos - self.columns + 1), (pos + self.columns - 1))):
             return True
 
         return False
 
     def scoring(self):
+        """Returns current player's score.
+
+        Returns:
+            int: -100 if current player lost, 0 otherwise.
+        """
         return -100 if self.lose() else 0
 
 
